@@ -1,0 +1,5 @@
+playwright
+PyPDF2
+python-dotenv
+pdf2image
+pywhatkit

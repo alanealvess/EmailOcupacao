@@ -1,0 +1,26 @@
+name: Coleta Diária
+
+on:
+  schedule:
+    - cron: '0 11 * * *'  # Todos os dias às 08:00 (Brasília = UTC+3)
+  workflow_dispatch:      # Permite rodar manualmente no GitHub
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Instalar dependências
+      run: |
+        pip install -r requirements.txt
+        playwright install
+
+    - name: Rodar coleta
+      run: python src/coleta_ocupacao.py
