@@ -1,19 +1,15 @@
 import smtplib
 from email.message import EmailMessage
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
 
 def enviar_email_com_pdfs_do_arquivo(lista_pdf_txt, destinatario):
-    remetente = os.getenv("EMAIL_REMETENTE")
-    senha_app = os.getenv("EMAIL_SENHA_APP")
+    remetente = os.environ.get("EMAIL_REMETENTE") or os.environ.get("EMAIL")
+    senha_app = os.environ.get("EMAIL_SENHA_APP") or os.environ.get("SENHA")
 
     if not remetente or not senha_app:
-        print("Remetente ou senha de app não encontrados no .env")
+        print("Remetente ou senha de app não encontrados nas variáveis de ambiente")
         return
 
-    # Lê os caminhos dos PDFs
     if not os.path.exists(lista_pdf_txt):
         print("Arquivo pdfs_gerados.txt não encontrado.")
         return
@@ -51,4 +47,4 @@ def enviar_email_com_pdfs_do_arquivo(lista_pdf_txt, destinatario):
 
 # Para executar diretamente
 if __name__ == "__main__":
-    enviar_email_com_pdfs_do_arquivo("logs/pdfs_gerados.txt", "alanealvess@gmail.com")
+    enviar_email_com_pdfs_do_arquivo("pdfs_gerados.txt", "alanealvess@gmail.com")
