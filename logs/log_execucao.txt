@@ -1,31 +1,12 @@
-[2025-04-24 09:27:24] Execução iniciada
-[2025-04-24 09:27:24] Iniciando coleta de ocupação (coleta_ocupacao.py)
-[2025-04-24 09:29:37] Erro ao executar coleta_ocupacao.py: Command '['C:\\Users\\Alane Souza\\Python\\Python313\\python.exe', 'coleta_ocupacao.py']' returned non-zero exit status 1.
-[2025-04-24 09:31:30] Execução iniciada
-[2025-04-24 09:31:30] Iniciando coleta de ocupação (coleta_ocupacao.py)
-[2025-04-24 09:41:57] Coleta concluída com sucesso
-[2025-04-24 09:41:57] Aguardando 10 segundos antes de enviar o e-mail...
-[2025-04-24 09:42:07] Iniciando envio de e-mail (enviar_email.py)
-[2025-04-24 09:42:14] E-mail enviado com sucesso
-[2025-04-24 09:42:14] Execução finalizada
-------------------------------------------------------------
-
-[2025-04-24 09:42:14] Iniciando envio de imagens pelo WhatsApp (enviar_whatsapp.py)
-[2025-04-24 09:42:18] Imagens enviadas com sucesso via WhatsApp
-[2025-04-24 09:54:34] Execução iniciada
-[2025-04-24 09:54:34] Iniciando coleta de ocupação (coleta_ocupacao.py)
-[2025-04-24 09:56:45] Erro ao executar coleta_ocupacao.py: Command '['C:\\Users\\Alane Souza\\Python\\Python313\\python.exe', 'coleta_ocupacao.py']' returned non-zero exit status 1.
-[2025-04-24 09:57:03] Execução iniciada
-[2025-04-24 09:57:03] Iniciando coleta de ocupação (coleta_ocupacao.py)
-[2025-04-24 09:58:53] Erro ao executar coleta_ocupacao.py: Command '['C:\\Users\\Alane Souza\\Python\\Python313\\python.exe', 'coleta_ocupacao.py']' returned non-zero exit status 1.
-[2025-04-24 09:59:34] Execução iniciada
-[2025-04-24 09:59:34] Iniciando coleta de ocupação (coleta_ocupacao.py)
-[2025-04-24 10:10:38] Coleta concluída com sucesso
-[2025-04-24 10:10:38] Aguardando 10 segundos antes de enviar o e-mail...
-[2025-04-24 10:10:48] Iniciando envio de e-mail (enviar_email.py)
-[2025-04-24 10:10:55] E-mail enviado com sucesso
-[2025-04-24 10:10:55] Iniciando envio de imagens pelo WhatsApp (enviar_whatsapp.py)
-[2025-04-24 10:11:46] Imagens enviadas com sucesso via WhatsApp
-[2025-04-24 10:11:46] Execução finalizada
-------------------------------------------------------------
-
+[2025-04-24 16:02:17] Execução iniciada
+[2025-04-24 16:02:17] Iniciando coleta de ocupação (coleta_ocupacao.py)
+[2025-04-24 16:04:21] Erro ao executar coleta_ocupacao.py: Command '['C:\\Users\\Alane Souza\\Python\\Python313\\python.exe', 'src/coleta_ocupacao.py']' returned non-zero exit status 1.
+[2025-04-24 16:04:34] Execução iniciada
+[2025-04-24 16:04:34] Iniciando coleta de ocupação (coleta_ocupacao.py)
+[2025-04-24 16:06:26] Erro ao executar coleta_ocupacao.py: Command '['C:\\Users\\Alane Souza\\Python\\Python313\\python.exe', 'src/coleta_ocupacao.py']' returned non-zero exit status 1.
+[2025-04-24 16:07:01] Execução iniciada
+[2025-04-24 16:07:01] Iniciando coleta de ocupação (coleta_ocupacao.py)
+[2025-04-24 16:18:46] Coleta concluída com sucesso
+[2025-04-24 16:18:46] Aguardando 10 segundos antes de enviar o e-mail...
+[2025-04-24 16:18:56] Iniciando envio de e-mail (enviar_email.py)
+[2025-04-24 16:18:57] E-mail enviado com sucesso
