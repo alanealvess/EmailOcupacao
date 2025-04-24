@@ -51,4 +51,4 @@ def enviar_email_com_pdfs_do_arquivo(lista_pdf_txt, destinatario):
 
 # Para executar diretamente
 if __name__ == "__main__":
-    enviar_email_com_pdfs_do_arquivo("pdfs_gerados.txt", "alanealvess@gmail.com")
+    enviar_email_com_pdfs_do_arquivo("logs/pdfs_gerados.txt", "alanealvess@gmail.com")

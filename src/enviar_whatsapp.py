@@ -5,7 +5,7 @@ import os
 numero = "+558195214238"
 
 # Procura arquivos JPG gerados
-arquivos = [f for f in os.listdir() if f.endswith(".jpg") and ("FOR" in f or "REC" in f)]
+arquivos = [f for f in os.listdir("output") if f.endswith(".jpg") and ("FOR" in f or "REC" in f)]
 
 # Horário atual + 1 minuto
 agora = datetime.datetime.now() + datetime.timedelta(minutes=1)
@@ -21,7 +21,7 @@ for arquivo in sorted(arquivos):  # FOR antes de REC se possível
     else:
         legenda = "Relatório de ocupação"
 
-    caminho = os.path.abspath(arquivo)
+    caminho = os.path.abspath(os.path.join("output", arquivo))
     print(f"[INFO] Enviando {caminho} via WhatsApp com legenda: {legenda}")
 
     pywhatkit.sendwhats_image(

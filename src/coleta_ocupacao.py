@@ -14,7 +14,7 @@ async def run():
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(viewport={"width": 1920, "height": 1080})
         page = await context.new_page()
-        await page.goto("http://192.168.100.5:8501/")
+        await page.goto("https://e5e0-179-108-254-141.ngrok-free.app")
 
         # Login
         await page.wait_for_selector("#text_input_1")
@@ -35,7 +35,7 @@ async def run():
 
         pdf_bytes = await page.pdf(format="A3", landscape=True, print_background=True)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        page2_pdf_path_for = f"FOR_mapa_ocupacao_pagina2_{timestamp}.pdf"
+        page2_pdf_path_for = f"output/FOR_mapa_ocupacao_pagina2_{timestamp}.pdf"
 
         reader = PdfReader(io.BytesIO(pdf_bytes))
         if len(reader.pages) >= 1:
@@ -73,7 +73,7 @@ async def run():
 
         pdf_bytes_rec = await page.pdf(format="A3", landscape=True, print_background=True)
         timestamp_rec = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        page2_pdf_path_rec = f"REC_mapa_ocupacao_pagina2_{timestamp_rec}.pdf"
+        page2_pdf_path_rec = f"output/REC_mapa_ocupacao_pagina2_{timestamp_rec}.pdf"
 
         reader_rec = PdfReader(io.BytesIO(pdf_bytes_rec))
         if len(reader_rec.pages) >= 1:
@@ -99,7 +99,7 @@ async def run():
 
         await browser.close()
 
-        with open("pdfs_gerados.txt", "w") as f:
+        with open("logs/pdfs_gerados.txt", "w") as f:
             f.write(f"{page2_pdf_path_for}\n")
             f.write(f"{page2_pdf_path_rec}\n")
         print("[INFO] Caminhos salvos em pdfs_gerados.txt.")

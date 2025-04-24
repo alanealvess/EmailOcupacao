@@ -5,7 +5,7 @@ import os
 
 def log(mensagem):
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open("log_execucao.txt", "a", encoding="utf-8") as f:
+    with open("logs/log_execucao.txt", "a", encoding="utf-8") as f:
         f.write(f"[{timestamp}] {mensagem}\n")
     print(f"[{timestamp}] {mensagem}")
 
@@ -16,7 +16,7 @@ python_path = "C:\\Users\\Alane Souza\\Python\\Python313\\python.exe"
 # --- Execução da coleta ---
 try:
     log("Iniciando coleta de ocupação (coleta_ocupacao.py)")
-    subprocess.run([python_path, "coleta_ocupacao.py"], check=True)
+    subprocess.run([python_path, "src/coleta_ocupacao.py"], check=True)
     log("Coleta concluída com sucesso")
 except subprocess.CalledProcessError as e:
     log(f"Erro ao executar coleta_ocupacao.py: {e}")
@@ -29,7 +29,7 @@ time.sleep(10)
 # --- Envio do e-mail ---
 try:
     log("Iniciando envio de e-mail (enviar_email.py)")
-    subprocess.run([python_path, "enviar_email.py"], check=True)
+    subprocess.run([python_path, "src/enviar_email.py"], check=True)
     log("E-mail enviado com sucesso")
 except subprocess.CalledProcessError as e:
     log(f"Erro ao executar enviar_email.py: {e}")
@@ -44,10 +44,9 @@ except subprocess.CalledProcessError as e:
 # if img_for or img_rec:
 #     try:
 #         log("Iniciando envio de imagens pelo WhatsApp (enviar_whatsapp.py)")
-#         subprocess.run([python_path, "enviar_whatsapp.py"], check=True)
+#         subprocess.run([python_path, "src/enviar_whatsapp.py"], check=True)
 #         log("Imagens enviadas com sucesso via WhatsApp")
 #     except subprocess.CalledProcessError as e:
 #         log(f"Erro ao executar enviar_whatsapp.py: {e}")
 # else:
 #     log("Nenhuma imagem JPG encontrada para envio via WhatsApp.")
-
