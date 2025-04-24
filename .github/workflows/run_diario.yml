@@ -2,7 +2,7 @@ name: Coleta Diária
 
 on:
   schedule:
-    - cron: '0 11 * * *'  # Todos os dias às 08:00 (Brasília = UTC+3)
+    - cron: '0 11 * * *'  # Executa diariamente às 08:00 horário de Brasília
   workflow_dispatch:      # Permite rodar manualmente no GitHub
 
 jobs:
