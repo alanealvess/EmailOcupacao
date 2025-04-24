@@ -4,33 +4,43 @@ from datetime import datetime
 from PyPDF2 import PdfReader, PdfWriter
 import io
 import time
-from pdf2image import convert_from_path
+import re
+import subprocess
 
-# Caminho correto do Poppler que você informou
-poppler_path = r"C:\Users\Alane Souza\poppler-24.08.0\Library\bin"
+log_file = "logs/log_execucao.txt"
+
+def log(msg):
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    full_msg = f"[{timestamp}] {msg}"
+    print(full_msg)
+    with open(log_file, "a", encoding="utf-8") as f:
+        f.write(full_msg + "\n")
 
 async def run():
+    url_local = "http://192.168.100.5:8501/"
+
     async with async_playwright() as p:
         browser = await p.chromium.launch(headless=True)
         context = await browser.new_context(viewport={"width": 1920, "height": 1080})
         page = await context.new_page()
-        await page.goto("https://e5e0-179-108-254-141.ngrok-free.app")
+        log("Acessando Mapa de Ocupação.")
+        await page.goto(url_local)
 
         # Login
         await page.wait_for_selector("#text_input_1")
         await page.fill("#text_input_1", "analise.ocupacao")
         await page.fill("#text_input_2", "@Asa@locadora4930@#$")
         await page.click("button[data-testid='stBaseButton-secondaryFormSubmit']")
-        print("[INFO] Login realizado.")
+        log("Login realizado.")
 
         time.sleep(70)
 
         # FOR
-        print("[INFO] Iniciando coleta da operação FOR...")
+        log("Iniciando coleta da operação FOR...")
         await page.wait_for_selector("button[data-testid='stTab']:has-text('Mapa de Ocupação')")
         await page.click("button[data-testid='stTab']:has-text('Mapa de Ocupação')")
-        print("[INFO] Aba 'Mapa de Ocupação' clicada.")
-        print("[INFO] Aguardando 140 segundos para FOR...")
+        log("Aba 'Mapa de Ocupação' clicada para FOR.")
+        log("Aguardando 140 segundos para FOR...")
         time.sleep(140)
 
         pdf_bytes = await page.pdf(format="A3", landscape=True, print_background=True)
@@ -43,32 +53,20 @@ async def run():
             writer.add_page(reader.pages[0])
             with open(page2_pdf_path_for, "wb") as f:
                 writer.write(f)
-            print(f"[INFO] PDF FOR gerado: {page2_pdf_path_for}")
+            log(f"PDF FOR gerado: {page2_pdf_path_for}")
         else:
-            print("[WARN] PDF FOR não possui páginas suficientes.")
-
-        # Converter FOR para JPG
-        try:
-            images_for = convert_from_path(page2_pdf_path_for, dpi=300, poppler_path=poppler_path)
-            if images_for:
-                img_for_path = page2_pdf_path_for.replace(".pdf", ".jpg")
-                images_for[0].save(img_for_path, "JPEG")
-                print(f"[INFO] FOR convertido para imagem: {img_for_path}")
-            else:
-                print("[ERRO] Nenhuma imagem gerada para FOR.")
-        except Exception as e:
-            print(f"[ERRO] Falha ao converter FOR: {e}")
+            log("[WARN] PDF FOR não possui páginas suficientes.")
 
         # REC
-        print("[INFO] Alternando para operação REC...")
+        log("Alternando para operação REC...")
         await page.locator("div[data-baseweb='select']").click()
         await page.wait_for_selector("div.st-emotion-cache-qiev7j:has-text('RAC REC')")
         await page.locator("div.st-emotion-cache-qiev7j:has-text('RAC REC')").click()
         await page.wait_for_timeout(2000)
 
         await page.click("button[data-testid='stTab']:has-text('Mapa de Ocupação')")
-        print("[INFO] Aba 'Mapa de Ocupação' reaberta para RAC REC.")
-        print("[INFO] Aguardando 400 segundos para REC...")
+        log("Aba 'Mapa de Ocupação' reaberta para RAC REC.")
+        log("Aguardando 400 segundos para REC...")
         time.sleep(400)
 
         pdf_bytes_rec = await page.pdf(format="A3", landscape=True, print_background=True)
@@ -81,27 +79,23 @@ async def run():
             writer_rec.add_page(reader_rec.pages[0])
             with open(page2_pdf_path_rec, "wb") as f:
                 writer_rec.write(f)
-            print(f"[INFO] PDF REC gerado: {page2_pdf_path_rec}")
+            log(f"PDF REC gerado: {page2_pdf_path_rec}")
         else:
-            print("[WARN] PDF REC não possui páginas suficientes.")
-
-        # Converter REC para JPG
-        try:
-            images_rec = convert_from_path(page2_pdf_path_rec, dpi=300, poppler_path=poppler_path)
-            if images_rec:
-                img_rec_path = page2_pdf_path_rec.replace(".pdf", ".jpg")
-                images_rec[0].save(img_rec_path, "JPEG")
-                print(f"[INFO] REC convertido para imagem: {img_rec_path}")
-            else:
-                print("[ERRO] Nenhuma imagem gerada para REC.")
-        except Exception as e:
-            print(f"[ERRO] Falha ao converter REC: {e}")
+            log("[WARN] PDF REC não possui páginas suficientes.")
 
         await browser.close()
 
         with open("logs/pdfs_gerados.txt", "w") as f:
             f.write(f"{page2_pdf_path_for}\n")
             f.write(f"{page2_pdf_path_rec}\n")
-        print("[INFO] Caminhos salvos em pdfs_gerados.txt.")
+        log("Caminhos salvos em pdfs_gerados.txt.")
+
+    # Envio de e-mail automático após geração dos PDFs
+    try:
+        log("Iniciando envio de e-mail...")
+        subprocess.run(["python", "src/enviar_email.py"], check=True)
+        log("E-mail enviado com sucesso.")
+    except subprocess.CalledProcessError as e:
+        log(f"[ERRO] Falha ao enviar o e-mail: {e}")
 
 asyncio.run(run())
